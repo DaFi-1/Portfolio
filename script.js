@@ -5,11 +5,118 @@ document.addEventListener('DOMContentLoaded', () => {
     const RAW_BASE = 'https://raw.githubusercontent.com';
     const CERT_BASE = 'certifications/';
 
+    const i18n = {
+        pt: {
+            role: 'Developer',
+            bio: 'Trabalho bem com pessoas e sou fanático por rotinas.',
+            email: 'contato@da.fi',
+            aboutTitle: 'Quem Sou',
+            aboutP1: 'Sou um desenvolvedor autodidata com experiência prática em dezenas de projetos reais. Minha trajetória começou da curiosidade e da disciplina diária — aprendendo, quebrando coisas e reconstruindo melhor a cada iteração.',
+            aboutP2: 'Atuo como generalista: backend, frontend, DevOps, automação e inteligência artificial não são barreiras para mim, são ferramentas. Cada stack é uma peça do puzzle que uso para entregar soluções completas e eficientes para meus clientes.',
+            openSourceTitle: 'Open Source',
+            openSource1: 'Colaboração ativa em projetos <a href="https://suckless.org" target="_blank" rel="noopener">suckless.org</a>',
+            openSource2: 'Colaboração ativa OpenStack <a href="https://www.openstack.org" target="_blank" rel="noopener">openstack.org</a>',
+            openSource3: 'Colaboração ativa Python <a href="https://www.python.org" target="_blank" rel="noopener">python.org</a>',
+            filterProjects: 'Projects',
+            filterEbooks: 'Ebooks Projects',
+            filterCertifications: 'Certifications',
+            backToTop: 'Voltar ao topo',
+            errorLoad: 'Erro ao carregar projetos.',
+            badgeCompleted: '✓ Concluído',
+            badgeDev: 'Em desenvolvimento',
+        },
+        en: {
+            role: 'Developer',
+            bio: 'I work well with people and I\'m fanatical about routines.',
+            email: 'contact@da.fi',
+            aboutTitle: 'About Me',
+            aboutP1: 'I\'m a self-taught developer with hands-on experience across dozens of real-world projects. My journey started from curiosity and daily discipline — learning, breaking things, and rebuilding them better with every iteration.',
+            aboutP2: 'I operate as a generalist: backend, frontend, DevOps, automation, and artificial intelligence aren\'t barriers — they\'re tools. Each stack is a piece of the puzzle I use to deliver complete, efficient solutions for my clients.',
+            openSourceTitle: 'Open Source',
+            openSource1: 'Active collaboration in <a href="https://suckless.org" target="_blank" rel="noopener">suckless.org</a> projects',
+            openSource2: 'Active OpenStack collaboration <a href="https://www.openstack.org" target="_blank" rel="noopener">openstack.org</a>',
+            openSource3: 'Active Python collaboration <a href="https://www.python.org" target="_blank" rel="noopener">python.org</a>',
+            filterProjects: 'Projects',
+            filterEbooks: 'Ebooks Projects',
+            filterCertifications: 'Certifications',
+            backToTop: 'Back to top',
+            errorLoad: 'Error loading projects.',
+            badgeCompleted: '✓ Completed',
+            badgeDev: 'In development',
+        },
+        zh: {
+            role: '开发者',
+            bio: '我善于与人合作，对日常规律充满热情。',
+            email: 'contact@da.fi',
+            aboutTitle: '关于我',
+            aboutP1: '我是一名自学成才的开发者，拥有数十个真实项目的实战经验。我的旅程始于好奇心和每日自律——学习、打破、并在每次迭代中重建得更好。',
+            aboutP2: '我是一名全栈型开发者：后端、前端、DevOps、自动化和人工智能不是障碍，而是工具。每个技术栈都是我为客户交付完整高效解决方案的拼图之一。',
+            openSourceTitle: '开源',
+            openSource1: '积极参与 <a href="https://suckless.org" target="_blank" rel="noopener">suckless.org</a> 项目协作',
+            openSource2: '积极参与 OpenStack 协作 <a href="https://www.openstack.org" target="_blank" rel="noopener">openstack.org</a>',
+            openSource3: '积极参与 Python 协作 <a href="https://www.python.org" target="_blank" rel="noopener">python.org</a>',
+            filterProjects: '项目',
+            filterEbooks: '电子书项目',
+            filterCertifications: '认证',
+            backToTop: '回到顶部',
+            errorLoad: '加载项目时出错。',
+            badgeCompleted: '✓ 已完成',
+            badgeDev: '开发中',
+        }
+    };
+
+    let currentLang = 'en';
+
+    const setLanguage = (lang) => {
+        if (!i18n[lang]) return;
+        currentLang = lang;
+        document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang === 'zh' ? 'zh-CN' : 'en';
+
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.dataset.i18n;
+            if (i18n[lang][key] !== undefined) {
+                if (i18n[lang][key].includes('<')) {
+                    el.innerHTML = i18n[lang][key];
+                } else {
+                    el.textContent = i18n[lang][key];
+                }
+            }
+        });
+
+        document.querySelectorAll('[data-i18n-title]').forEach(el => {
+            const key = el.dataset.i18nTitle;
+            if (i18n[lang][key]) el.title = i18n[lang][key];
+        });
+
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.lang === lang);
+        });
+
+        if (loadedRepos) {
+            document.querySelectorAll('.github-preview[data-category="ebooks-projects"] .badge').forEach(badge => {
+                const isCompleted = badge.classList.contains('badge-success');
+                badge.outerHTML = isCompleted
+                    ? `<span class="badge badge-success">${i18n[lang].badgeCompleted}</span>`
+                    : `<span class="badge badge-development">${i18n[lang].badgeDev}</span>`;
+            });
+        }
+
+        const emailEl = document.querySelector('.banner-email');
+        if (emailEl) emailEl.href = `mailto:${i18n[lang].email}`;
+
+        if (loadedRepos && els.grid.querySelector('p[style]')) {
+            els.grid.innerHTML = `<p style="text-align:center;color:#64748b;grid-column:1/-1;">${i18n[lang].errorLoad}</p>`;
+        }
+
+        localStorage.setItem('lang', lang);
+    };
+
     const els = {
         filterBtns: document.querySelectorAll('.filter-btn'),
         grid: document.getElementById('projects-grid'),
         filters: document.querySelector('.filters'),
-        backToTop: document.getElementById('backToTop')
+        backToTop: document.getElementById('backToTop'),
+        langBtns: document.querySelectorAll('.lang-btn')
     };
 
     const isEbook = (name) => name.toLowerCase().startsWith('ebook');
@@ -67,7 +174,10 @@ document.addEventListener('DOMContentLoaded', () => {
         els.grid.appendChild(fragment);
     };
 
+    let loadedRepos = null;
+
     const renderRepos = async (repos) => {
+        loadedRepos = repos;
         const fragment = document.createDocumentFragment();
 
         const sorted = (await Promise.all(
@@ -94,8 +204,8 @@ document.addEventListener('DOMContentLoaded', () => {
             let footer = '';
             if (category === 'ebooks-projects') {
                 const badge = completed
-                    ? '<span class="badge badge-success">✓ Concluído</span>'
-                    : '<span class="badge badge-development">Em desenvolvimento</span>';
+                    ? `<span class="badge badge-success">${i18n[currentLang].badgeCompleted}</span>`
+                    : `<span class="badge badge-development">${i18n[currentLang].badgeDev}</span>`;
                 footer = `<div class="preview-footer"><span class="preview-title">${repo.name}</span>${badge}</div>`;
             }
 
@@ -121,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
             updateCounts();
         } catch (error) {
             console.error(error);
-            els.grid.innerHTML = '<p style="text-align:center;color:#64748b;grid-column:1/-1;">Erro ao carregar projetos.</p>';
+            els.grid.innerHTML = `<p style="text-align:center;color:#64748b;grid-column:1/-1;">${i18n[currentLang].errorLoad}</p>`;
         }
     };
 
@@ -145,6 +255,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     els.backToTop?.addEventListener('click', () => window.scrollTo({ top: 0 }));
 
-    // Init
+    els.langBtns.forEach(btn => {
+        btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+    });
+
+    const savedLang = localStorage.getItem('lang');
+    if (savedLang && i18n[savedLang]) setLanguage(savedLang);
+    else setLanguage('pt');
+
     init();
 });

@@ -34,6 +34,46 @@ body {
     --danger: #f85149;
 }
 
+/* Language Bar */
+.language-bar {
+    max-width: 1200px;
+    margin: 0 auto 0.75rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding: 0.5rem 1.5rem;
+}
+
+.lang-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.75rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: all 0.15s ease;
+}
+
+.lang-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--accent);
+}
+
+.lang-btn.active {
+    background: var(--bg-tertiary);
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.lang-btn svg {
+    border-radius: 2px;
+}
+
 /* Banner */
 .banner {
     max-width: 1200px;
@@ -126,15 +166,26 @@ body {
 .banner-about {
     max-width: 1200px;
     margin: 0 auto 1rem;
-    padding: 1.25rem 1.5rem;
+    padding: 1.5rem;
     background: var(--bg-secondary);
     border: 1px solid var(--border);
 }
 
+.banner-about-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
 .banner-about-text {
     font-size: 1rem;
-    color: var(--text-primary);
-    line-height: 1.6;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+}
+
+.banner-about-text:last-of-type {
     margin-bottom: 1.25rem;
 }
 
@@ -161,32 +212,6 @@ body {
     color: var(--text-secondary);
 }
 
-.tech-logos {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    margin-top: 0.5rem;
-}
-
-.tech-logo {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    color: var(--text-secondary);
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    transition: all 0.15s ease;
-}
-
-.tech-logo:hover {
-    color: var(--accent);
-    border-color: var(--accent);
-    transform: translateY(-2px);
-}
-
 /* Stats Card */
 .stats-card {
     max-width: 1200px;
@@ -204,9 +229,9 @@ body {
 
 .stats-grid img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
     display: block;
+    object-fit: contain;
 }
 
 /* Filters */
@@ -425,6 +450,10 @@ body {
 
 /* Responsive */
 @media (max-width: 640px) {
+    .language-bar {
+        justify-content: center;
+    }
+
     .banner {
         grid-template-columns: 1fr;
         text-align: center;
