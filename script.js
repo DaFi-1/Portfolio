@@ -7,8 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const i18n = {
         pt: {
-            role: 'Developer',
-            bio: 'Trabalho bem com pessoas e sou fanático por rotinas.',
+            role: 'desenvolvedor pleno',
             email: 'contato@da.fi',
             aboutTitle: 'Quem Sou',
             aboutP1: 'Sou um desenvolvedor autodidata com experiência prática em dezenas de projetos reais. Minha trajetória começou da curiosidade e da disciplina diária — aprendendo, quebrando coisas e reconstruindo melhor a cada iteração.',
@@ -23,10 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
             backToTop: 'Voltar ao topo',
             errorLoad: 'Erro ao carregar projetos.',
             badgeCompleted: '✓ Concluído',
-            badgeDev: 'Em desenvolvimento',
+            badgeDev: 'Em desenvolvimento'
         },
         en: {
-            role: 'Developer',
+            role: 'Mid-level Developer',
             bio: 'I work well with people and I\'m fanatical about routines.',
             email: 'contact@da.fi',
             aboutTitle: 'About Me',
@@ -45,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
             badgeDev: 'In development',
         },
         zh: {
-            role: '开发者',
+            role: '中级开发者',
             bio: '我善于与人合作，对日常规律充满热情。',
             email: 'contact@da.fi',
             aboutTitle: '关于我',
