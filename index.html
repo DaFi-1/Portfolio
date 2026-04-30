@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio - DaFi-1</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="stats-card">
+        <div class="stats-grid">
+            <img src="https://github-readme-stats.vercel.app/api?username=DaFi-1&show_icons=true&theme=dark" alt="GitHub Stats">
+            <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=DaFi-1&layout=compact&theme=dark" alt="Top Languages">
+            <img src="https://github-readme-streak-stats.herokuapp.com/?user=DaFi-1&theme=dark" alt="GitHub Streak">
+        </div>
+    </div>
+
+    <section class="filters-section">
+        <div class="filters">
+            <button class="filter-btn active" data-filter="project">Projects: <span class="count">0</span></button>
+            <button class="filter-btn" data-filter="ebooks-projects">Ebooks Projects: <span class="count">0</span></button>
+            <button class="filter-btn" data-filter="certification">Certifications: <span class="count">0</span></button>
+        </div>
+    </section>
+
+    <div class="projects-container">
+        <div class="projects-grid" id="projects-grid"></div>
+    </div>
+
+    <button class="back-to-top" id="backToTop" title="Voltar ao topo">↑</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
